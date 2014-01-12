@@ -1,0 +1,20 @@
+[core] 
+    editor = vim
+[user]
+    name = Alexandr Medvedev
+    email = alexandr.mdr@gmail.com
+[alias]
+    co = checkout
+    ci = commit
+    cm = commit -m
+    ca = commit -amend
+    st = status
+    br = branch
+    
+    sf = show --pretty="format:" --name-only
+
+    lg = log '--pretty=tformat:%C(red)%h%Creset %C(yellow)%d%Creset %s %C(green)(%ad)%Creset %C(cyan)<%an>%Creset' --graph --date=relative
+    lga = log --all '--pretty=tformat:%C(red)%h%Creset%x09%C(yellow)%d%Creset %s %C(green)(%ad)%Creset %C(cyan)<%an>%Creset' --graph --date=relative
+
+    type = cat-file -t
+    dump = cat-file -p
