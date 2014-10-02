@@ -15,6 +15,7 @@ alias dormf='docker rm -f'
 alias dormi='docker rmi'
 alias dostopall='docker stop $(docker ps -a -q)'
 alias dormall='docker rm $(docker ps -a -q)'
+alias dormfall='docker rm -f $(docker ps -a -q)'
 
 dnsenter() {
     sudo nsenter --target $(sudo docker inspect --format "{{ .State.Pid }}" ${1}) --mount --uts --ipc --net --pid
