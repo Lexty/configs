@@ -62,53 +62,37 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/steamburn/theme.lua
 -- common
 modkey     = "Mod4"
 altkey     = "Mod1"
-terminal   = "x-terminal-emulator" or "xterm"
+terminal   = "urxvtc" or "xterm"
 editor     = os.getenv("EDITOR") or "nano" or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
 -- user defined
-browser    = "google-chrome"
-browser2   = "firefox"
-gui_editor = "subl"
+browser    = "dwb"
+browser2   = "iron"
+gui_editor = "gvim"
 graphics   = "gimp"
 
 -- lain
 lain.layout.termfair.nmaster = 3
 lain.layout.termfair.ncol    = 1
 
---local layouts = {
---    awful.layout.suit.floating,
---    lain.layout.uselessfair.horizontal,
---    lain.layout.uselesstile,
---    lain.layout.uselessfair,
---    lain.layout.termfair,
---    lain.layout.uselesspiral.dwindle
---}
-
-local layouts =
-{
+local layouts = {
     awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+    lain.layout.uselessfair.horizontal,
+    lain.layout.uselesstile,
+    lain.layout.uselessfair,
+    lain.layout.termfair,
+    lain.layout.uselesspiral.dwindle
 }
 -- }}}
 
 -- {{{ Tags
 tags = {
-   names = { "web", "ide", "term", "vm", "docs", "media", "down"},
-   --layout = { layouts[1], layouts[3], layouts[1], layouts[1], layouts[6] }
+   names = { "web", "term", "docs", "media", "down"},
+   layout = { layouts[1], layouts[3], layouts[4], layouts[1], layouts[6] }
 }
 for s = 1, screen.count() do
-   tags[s] = awful.tag(tags.names, s, layouts)
+   tags[s] = awful.tag(tags.names, s, tags.layout)
 end
 -- }}}
 
@@ -191,6 +175,15 @@ fshomeupd = lain.widgets.fs({
     partition = "/home"
 })
 
+-- Battery
+batwidget = lain.widgets.bat({
+    settings = function()
+        bat_perc = bat_now.perc
+        if bat_perc == "N/A" then bat_perc = "Plug" end
+        widget:set_markup(markup(gray, " Bat ") .. bat_perc .. " ")
+    end
+})
+
 -- Net checker
 netwidget = lain.widgets.net({
     settings = function()
@@ -217,7 +210,7 @@ volumewidget = lain.widgets.alsa({
 })
 
 -- Weather
-yawn = lain.widgets.yawn(2122265)
+yawn = lain.widgets.yawn(123456)
 
 -- Separators
 first = wibox.widget.textbox(markup.font("Tamsyn 4", " "))
@@ -322,6 +315,7 @@ for s = 1, screen.count() do
     --right_layout:add(mailwidget)
     right_layout:add(cpuwidget)
     right_layout:add(memwidget)
+    right_layout:add(batwidget)
     right_layout:add(netwidget)
     right_layout:add(volumewidget)
     right_layout:add(mytextclock)
