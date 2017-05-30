@@ -1,0 +1,16 @@
+[Unit]
+Description=Yandex Disk console client
+Requires=network.target
+
+[Service]
+Type=forking
+User=root
+Group=root
+ExecStart=/usr/bin/yandex-disk start -c /etc/yandex-disk/config.cfg
+#Следующие две строчки это костыль, т.к. при перезагрузке служба не стартует сразу, пишет ошибку: "Ошибка: путь к папке используется другим пользователем".
+#Скорее всего надо написать еще что-нибудь в "Requires=", чтобы служба стартовала после чего-то еще, но я не знаю что
+#Хотя с другой стороны если служба зависнет то сама перезапустится  
+RestartSec=60
+Restart=always
+[Install]
+WantedBy=multi-user.target
